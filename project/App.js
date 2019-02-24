@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, View} from 'react-native';
 import Map from './components/Map';
 import CurrentLocation from './components/CurrentLocation';
-type Props = {};
-
-export default class App extends Component<Props> {
+export default class App extends Component{
 
   state={
     userLocation:null,
@@ -20,7 +18,6 @@ export default class App extends Component<Props> {
           longitudeDelta:0.0121,
         }
       })
-
     },err=>console.log(err));
   }
   render() {
