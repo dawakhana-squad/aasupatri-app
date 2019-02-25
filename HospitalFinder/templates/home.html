@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<h2>{{user.first_name}}{{user.last_name}}</h2>
+  {% for doc in DocDetails %}
+    <div class="col s12">
+      <div class="card">
+        <div class="card-title">
+          {{doc.name}} 
+        </div>
+        <div class="card-content">
+            <p>{{doc.email}}</p>
+            <p>{{doc.speciality}}</p>
+            <p>{{doc.timing}}</p>
+            <p>{{doc.registrationNumber}}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% else %}
+  <a href="/login"></a>
+{% endif %}
+{{request.user.email}}
+{% endblock %}
