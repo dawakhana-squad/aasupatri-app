@@ -9,33 +9,35 @@ class DocForm(forms.ModelForm):
         }        
     ),label='Name')
 
+    speciality = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'placeholder':'Speciality of the Doctor',
+            "class" : "input-field"
+        }
+    ),label='Speciality')
+
+    timing = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'placeholder':"Available timings of the Doctor ",
+            "class":"input-field"
+        }        
+    ),label='Timing')
+
     email = forms.CharField(widget=forms.TextInput(
         attrs={
-            'placeholder':"Email f the Doctor",
+            'placeholder':"Email ID of the Doctor",
             "class":"input-field"
         }        
     ),label='Email')
 
-    timing = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'placeholder':"Timing of the doctor",
-            "class":"input-field"
-        }        
-    ),label='Timing')
-    speciality = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'placeholder':'speciality of the Doctor',
-            "class" : "input-field"
-        }
-    ))
     registrationNumber = forms.CharField(widget=forms.TextInput(
         attrs={
-            'placeholder':"Reg Number of the doctor",
+            'placeholder':"Reg Number of the Dcotor",
             "class":"input-field"
         }        
     ),label='Registration Number',required=False)
     
     class Meta:         
         model = Doctor
-        fields = ("name","email","timing","speciality","registrationNumber")
+        fields = ("name","speciality","timing","email","registrationNumber")
 
