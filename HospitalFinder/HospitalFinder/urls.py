@@ -22,6 +22,9 @@ urlpatterns = [
     url(r'^$',home, name="home"),
     url(r'^admin/', admin.site.urls),
     url(r'^addDoc/', create, name='AddDoc'),
+    url(r'^hospitalEdit/', hospitalEdit, name='AddDoc'),
+    url(r'^doctos/(?P<pk>\d+)/edit/$', doctor_edit, name='doctor_edit'),
+    # url(r'^delDoc/(?P<pk>\d+)', create, name='Delete'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
 ]

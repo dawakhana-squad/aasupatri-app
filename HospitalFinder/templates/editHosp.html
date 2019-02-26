@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit{% endblock %}
+
+
+
+{% block content %}
+<h4>Edit Details</h4>
+<form class="approveStudent" action="#" method="post">{% csrf_token %}                        
+    <input type="text" class="input-field validate" name="email" type="text" id="email" label="Email: " placeholder="Email of the hospital">
+    <button class="btn waves-effect waves-light" type="submit">Change
+        <i class="material-icons right">check</i>
+    </button>
+</form>
+<form class="approveStudent" action="#" method="post">{% csrf_token %}                        
+    <input type="text" class="input-field validate" name="phone" type="text" id="phone" label="Phone: " placeholder="Phone Number of the hospital">
+    <button class="btn waves-effect waves-light" type="submit">Change
+        <i class="material-icons right">check</i>
+    </button>
+</form>
+<form class="approveStudent" action="#" method="post">{% csrf_token %}                        
+    <input type="text" class="input-field validate" name="address" type="text" id="address" label="Address: " placeholder="Address of the hospital">
+    <button class="btn waves-effect waves-light" type="submit">Change
+        <i class="material-icons right">check</i>
+    </button>
+</form>
+{% comment %} <form method='POST'> {% csrf_token %}
+	 <div class="row">
+        <div class="input-field col s12">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Email</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="address" type="text" class="validate">
+          <label for="address">Address</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="phone" type="text" class="validate">
+          <label for="phone">Phone</label>
+        </div>
+     </div>
+	<button class="btn btn-waves-effect waves-light" type="submit" name='action'>Submit</button>
+</form> {% endcomment %}
+
+{% endblock %}

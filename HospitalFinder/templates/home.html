@@ -6,19 +6,32 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
-<h2>{{user.first_name}}{{user.last_name}}</h2>
+  <div class="row">
+      <div class="col s6" style="text-align:left">
+        <h2>{{user.first_name}}{{user.last_name}}</h2>
+        <h5><strong>ID: </strong>{{user.profile.hospitalID}}</h5>
+        <h5><strong>Email: </strong>{{user.email}}</h5>
+        <h5><strong>Phone: </strong>{{user.profile.phone}}</h5>
+        <h5><strong>Address: </strong>{{user.profile.Address}}</h5>
+        <h5><strong>Specialities: </strong>{{user.profile.specalitiesAvaliable}}</h5>
+        <a class="waves-effect waves-light btn" style="padding:2pt" href="/hospitalEdit"><i class="material-icons right">border_color</i>Edit Hospital</a>
+      </div>
+</div>
   {% for doc in DocDetails %}
-    <div class="col s12">
+  {% if forloop.first %} <h4>Doctos in our hospital</h4> <div class="row">{%endif%}
+    <div class="col s6">
       <div class="card">
-        <div class="card-title">
+        <div class="card-title" style="padding-left:10pt">
           {{doc.name}} 
         </div>
         <div class="card-content">
-            <p>{{doc.email}}</p>
-            <p>{{doc.speciality}}</p>
-            <p>{{doc.timing}}</p>
-            <p>{{doc.registrationNumber}}</p>
+                <p>{{doc.email}}</p>
+                <p>{{doc.speciality}}</p>
+                <p>{{doc.timing}}</p>
+                <p>{{doc.registrationNumber}}</p>            
+              <a class="waves-effect waves-light btn" style="padding:2pt" href="{% url 'doctor_edit' pk=doc.id %}"><i class="material-icons right">border_color</i>  Edit</a>          
         </div>
+      {% if forloop.counter|divisibleby:2 %}</div>  <div class="row">{% endif %}       
       </div>
     </div>
   {% endfor %}
