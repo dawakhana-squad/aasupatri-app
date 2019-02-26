@@ -7,12 +7,6 @@ import { makeLogin } from "./../services/backendConnection";
 import EnterPin from "./../components/EnterPin"
 
 const DURATION = 500;
-// const loadRegisterRoute = NavigationActions.reset({
-//     index: 0,
-//     actions: [
-//         NavigationActions.navigate({ routeName: 'Register' })
-//     ]
-// })
 
 
 export default class SplashPage extends Component {
@@ -23,7 +17,8 @@ export default class SplashPage extends Component {
             color: '#f5a623',
             username: '',
             password: '',
-            showLogin: false
+            showLogin: false,
+            //showRegister: true
         }
         this.navigation = this.props.navigation;
         this._verifyDataBase();
@@ -86,22 +81,15 @@ export default class SplashPage extends Component {
         });
     }
 
-    /**
-     * Loading listing page
-     */
-    _continueToListingPage = () => {
-        console.log('_continueToListingPage');
-        this.setState({
-            message: 'Application is Ready!!!'
-        });
-        // this.navigation.dispatch(loadListingpageRoute);
-    }
-
     _continueToRegister = () => {
         this.props.navigation.navigate('Register');
 
     }
 
+    _continueToLandingPage=()=>{
+        this.props.navigation.navigate('Landing')
+    }
+    
     /**
      * When user clicks on login button
      * or
@@ -168,7 +156,7 @@ export default class SplashPage extends Component {
                     this.setState({
                         showPinMode: false
                     });
-                    this._continueToListingPage();
+                    this._continueToLandingPage();
                 } else {
                     this._showPinError();
                 }
@@ -189,7 +177,7 @@ export default class SplashPage extends Component {
                             showPinMode: false
                         });
                         //need to get emp data.
-                        this.this._continueToListingPage();
+                        this._continueToLandingPage();
                     });
                 } else {
                     this._showPinError();
@@ -249,13 +237,15 @@ export default class SplashPage extends Component {
                             <Text style={[styles.submitText]}>Login</Text>
                         </TouchableOpacity>
                     } 
+                        {this.state.showLogin && 
                         <TouchableOpacity 
-                            disabled={this.state.password || this.state.username}
+                           // disabled={!this.state.password || !this.state.username}
                             style={styles.submit}
                             onPress={this._continueToRegister}
                             underlayColor='#fff'>
-                            <Text style={[styles.submitText]}>New? Just Register</Text>
+                            <Text style={[styles.submitText]}>New User? Register</Text>
                         </TouchableOpacity>
+                    }
                 </View>
 
                 {this.state.showPinMode && 
