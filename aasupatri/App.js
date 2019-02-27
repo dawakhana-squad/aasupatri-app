@@ -5,14 +5,14 @@ import { ThemeContext,getTheme, COLOR} from "react-native-material-ui";
 // import ListingPage from "./pages/listing";
 // import DetailsPage from "./pages/details";
 import SplashPage from "./pages/Splash";
-import FeedbackPage from "./pages/feedback";
 import Register from './pages/Register';
 import Landing from './pages/Landing';
+import DoctorsList from './pages/DoctorsList';
 const Asupathri = createStackNavigator({
   Home: {screen: SplashPage, navigationOptions: { header: null }},
   Register: {screen: Register, navigationOptions: { header: null }},
   Landing: {screen: Landing, navigationOptions: { header: null }},
-//  ListingPage: {screen: ListingPage, navigationOptions: { header: null }},
+  DoctorsList: {screen: DoctorsList, navigationOptions: { header: null }},
   // DetailsPage: {screen: DetailsPage, navigationOptions: { header: null }},
 //  FeedbackPage: {screen: FeedbackPage, navigationOptions: { header: null }}
 },{

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, View} from 'react-native';
-import Map from './components/Map';
+import Map from './components/Mapdirect';
 import CurrentLocation from './components/CurrentLocation';
 export default class App extends Component{
 

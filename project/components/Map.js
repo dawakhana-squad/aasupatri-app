@@ -23,6 +23,7 @@ const Map= props =>{
     const styles = StyleSheet.create({
         container: {
           ...StyleSheet.absoluteFillObject,
+          flex:1,
           height: 400,
           width: 400,
           justifyContent: 'flex-end',
