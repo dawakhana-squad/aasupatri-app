@@ -156,7 +156,10 @@ export default class Listing extends Component {
 
 	_continueToDoctorsList=()=>{
 		this.props.navigation.navigate('DoctorsList');
-	}
+    }
+    _continueToHospitalMap=()=>{
+        this.props.navigation.navigate('HospitalMap');
+    }
 
     render() {
         return (
@@ -188,7 +191,7 @@ export default class Listing extends Component {
                     </TouchableOpacity>
                     </View>
                     <View style={[styles.colStyle, styles.colRightStyle]}>
-                        <TouchableOpacity style={styles.colDataStyle}>
+                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToHospitalMap}>
                             
                             <Image style={styles.ImageStyle}
                                 source={HospitalIcon}/>

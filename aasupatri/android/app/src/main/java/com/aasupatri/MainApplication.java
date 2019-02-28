@@ -2,6 +2,10 @@ package com.aasupatri;
 import org.pgsqlite.SQLitePluginPackage;
 import android.app.Application;
 
+
+import com.airbnb.android.react.maps.MapsPackage;
+
+
 import com.facebook.react.ReactApplication;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new SQLitePluginPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
-            new MainReactPackage()
+            new MainReactPackage(),
+            new MapsPackage()
       );
     }
 

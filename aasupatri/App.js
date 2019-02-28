@@ -8,11 +8,14 @@ import SplashPage from "./pages/Splash";
 import Register from './pages/Register';
 import Landing from './pages/Landing';
 import DoctorsList from './pages/DoctorsList';
+import HospitalMap from './pages/HospitalMap';
 const Asupathri = createStackNavigator({
   Home: {screen: SplashPage, navigationOptions: { header: null }},
   Register: {screen: Register, navigationOptions: { header: null }},
   Landing: {screen: Landing, navigationOptions: { header: null }},
   DoctorsList: {screen: DoctorsList, navigationOptions: { header: null }},
+  HospitalMap: {screen: HospitalMap, navigationOptions: { header: null }},
+  
   // DetailsPage: {screen: DetailsPage, navigationOptions: { header: null }},
 //  FeedbackPage: {screen: FeedbackPage, navigationOptions: { header: null }}
 },{
