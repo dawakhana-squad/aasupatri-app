@@ -2,6 +2,7 @@
 const pool = require('../data/config');
 
 const router = app => {
+    //hospital directory table group by district
      app.get('/hospital_directory/:District', (request, response) => {
         const District = request.params.District;
     
@@ -12,6 +13,37 @@ const router = app => {
          });
      });
     
+     // Doctor information table 
+     app.get('/doctor_info', (request, response) => {
+            
+        pool.query('SELECT * FROM doctor_info', (error, result) => {
+            if (error) throw error;
+   
+            response.send(result);
+         });
+     });
+
+     //Blood availability information
+     app.get('/blood_info', (request, response) => {
+            
+        pool.query('SELECT * FROM blood_info', (error, result) => {
+            if (error) throw error;
+   
+            response.send(result);
+         });
+     });
+
+     //rating information
+     app.get('/rating', (request, response) => {
+            
+        pool.query('SELECT * FROM rating', (error, result) => {
+            if (error) throw error;
+   
+            response.send(result);
+         });
+     });
+    
+     // Login details validation
     app.post('/login_details', (request, response) => {
         console.log(request.body);
         const Mob_number = request.body.Mob_number;
@@ -33,6 +65,8 @@ const router = app => {
             }   
         });
     });
+
+    //Registered users data
     app.post('/users_table', (request, response) => {
         const users = {
         "User_ID" : request.body.User_ID,
