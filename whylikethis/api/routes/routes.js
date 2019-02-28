@@ -2,31 +2,33 @@
 const pool = require('../data/config');
 
 const router = app => {
-    app.get('/hospital_directory/:District', (request, response) => {
+     app.get('/hospital_directory/:District', (request, response) => {
         const District = request.params.District;
-
-        pool.query('SELECT Location_Coordinates,Hospital_Name FROM hospital_directory WHERE District = ?',District, (error, result) => {
+    
+        pool.query('SELECT Location_Coordinates,Hospital_Name FROM hospital_directory WHERE District = ?', District, (error, result) => {
             if (error) throw error;
-     
+   
             response.send(result);
-        });
-    });
+         });
+     });
+    
     app.post('/login_details', (request, response) => {
         console.log(request.body);
         const Mob_number = request.body.Mob_number;
         const Pwd = request.body.Pwd;
+        console.log('read', Mob_number, Pwd);
         const data = {
-            "Data": ""
+            "data": ""
         };
 
         pool.query('SELECT * FROM Login_details WHERE Mob_number = ? AND Pwd = ? ', [Mob_number,Pwd],function(error, rows,fields) {
             if (error) throw error;
             console.log(rows, 'rows', Mob_number, Pwd);
             if(rows.length != 0){
-                data["Data"] = "Logged in";
+                data["data"] = true;
                 response.json(data);
             }else{
-                data["Data"] = "Mobile_no or password maybe wrong";
+                data["data"] = false;
                 response.json(data);
             }   
         });

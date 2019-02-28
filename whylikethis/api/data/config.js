@@ -11,13 +11,13 @@ const config = {
 // Create a MySQL pool
 const pool = mysql.createPool(config);
 
-config.connect(function(err) {
-    if (err) {
-      return console.error('error: ' + err.message);
-    }
+// config.connect(function(err) {
+//     if (err) {
+//       return console.error('error: ' + err.message);
+//     }
    
-    console.log('Connected to the MySQL server.');
-  });
+//     console.log('Connected to the MySQL server.');
+//   });
 
 // Export the pool
 module.exports = pool;
