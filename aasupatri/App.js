@@ -10,6 +10,8 @@ import Landing from './pages/Landing';
 import DoctorsList from './pages/DoctorsList';
 import HospitalMap from './pages/HospitalMap';
 import BloodBank from './pages/BloodBank';
+import Diagnosis from './pages/Diagnosis';
+import HospitalsList from './pages/HospitalsList';
 
 const Asupathri = createStackNavigator({
   Home: {screen: SplashPage, navigationOptions: { header: null }},
@@ -17,8 +19,9 @@ const Asupathri = createStackNavigator({
   Landing: {screen: Landing, navigationOptions: { header: null }},
   DoctorsList: {screen: DoctorsList, navigationOptions: { header: null }},
   HospitalMap: {screen: HospitalMap, navigationOptions: { header: null }},
+  HospitalsList: {screen: HospitalsList, navigationOptions: { header: null }},
   BloodBank: {screen: BloodBank, navigationOptions: { header: null }},
-  
+  Diagnosis: {screen: Diagnosis, navigationOptions: { header: null }}
   // DetailsPage: {screen: DetailsPage, navigationOptions: { header: null }},
 //  FeedbackPage: {screen: FeedbackPage, navigationOptions: { header: null }}
 },{
@@ -37,7 +40,7 @@ const Asupathri = createStackNavigator({
 // };
 const uiTheme = {
   palette: {
-    primaryColor: "#f5a623",
+    primaryColor: "#0080d1",
   },
   toolbar: {
     container: {

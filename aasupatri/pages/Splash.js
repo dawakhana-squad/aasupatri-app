@@ -5,7 +5,9 @@ import { NavigationActions } from 'react-navigation';
 import { initDataBase, getSavedPin, saveAppPin, saveLoginInfo } from "./../services/databaseConnection";
 import { makeLogin } from "./../services/backendConnection";
 import EnterPin from "./../components/EnterPin"
+// import SVGImage from 'react-native-svg-image';
 
+  
 const DURATION = 500;
 
 
@@ -14,9 +16,9 @@ export default class SplashPage extends Component {
         super(props);
         this.state = {
             message: 'Loading application',
-            color: '#f5a623',
-            username: '',
-            password: '',
+            color: '#0080d1',
+            Mob_number: '',
+            Pwd: '',
             showLogin: false,
             //showRegister: true
         }
@@ -62,7 +64,7 @@ export default class SplashPage extends Component {
                 NetInfo.removeEventListener('connectionChange',this._verifyNetworkConnectionAndProccedForLogin);
                 this.setState({
                     showLogin: true,
-                    color: '#f5a623'
+                    color: '#0080d1'
                 });
             } else {
                 /**
@@ -103,13 +105,14 @@ export default class SplashPage extends Component {
         /**
          * Making backend call to verify user
          */
-        makeLogin(this.state.username, this.state.password, (res)=>{
+        makeLogin(this.state.Mob_number, this.state.Pwd, (res)=>{
+            console.log(res);
             if(res){
             
                 /**
                  * Storing login info.
                  */
-                saveLoginInfo(this.state.username, this.state.password, ()=> {
+                saveLoginInfo(this.state.Mob_number, this.state.Pwd, ()=> {
                         //Need to show set pin view
                     this.currentPinPross = "NEW_PIN";
                     this.setState({
@@ -123,6 +126,7 @@ export default class SplashPage extends Component {
                 this.setState({
                     message: 'Authentication failed with server!!!',
                     showLogin: false,
+                    showPinMode: false,
                     color: '#E64623',
                     logInEroor: true
                 });
@@ -138,7 +142,7 @@ export default class SplashPage extends Component {
     _logInTry = () => {
         this.setState({
             showLogin: true,
-            color: '#f5a623',
+            color: '#0080d1',
             logInEroor: false
         });
     }
@@ -202,14 +206,23 @@ export default class SplashPage extends Component {
                 <Text style={[styles.mainHeading, (this.state.showPinMode ? styles.pinMode : {})]}>
                     Asupathri
                 </Text>
+                {/* <SVGImage
+                    style={{ width: 20, height: 20 }}
+                    source={require('../images/LOGO.svg')} */}
+                {/* /> */}
+
+                {/* <Svg width="80" height="80">
+                <Image 
+                href={require('../images/LOGO_02.svg')}/>
+                </Svg> */}
                 <View style={[styles.logInInfoHolder]}>
                     {this.state.showLogin && <View style={[styles.logInInfoHolderTop]}>
-                        <Text style={[styles.fieldLabel, getLabelHeight(this.state.username)]}>Mobile Number</Text>
+                        <Text style={[styles.fieldLabel, getLabelHeight(this.state.Mob_number)]}>Mobile Number</Text>
                         <TextInput
                             placeholder="Mobile Number"
-                            style={[styles.inputTextStyle, getInputHeight(this.state.username)]}
-                            onChangeText={(username) => this.setState({ username })}
-                            value={this.state.username}
+                            style={[styles.inputTextStyle, getInputHeight(this.state.Mob_number)]}
+                            onChangeText={(Mob_number) => this.setState({ Mob_number })}
+                            value={this.state.Mob_number}
                             underlineColorAndroid={'transparent'}
                             placeholderTextColor={"#000"}
                             keyboardType = 'numeric'
@@ -217,20 +230,20 @@ export default class SplashPage extends Component {
                         <View
                             style={styles.horizentalLine}
                         />
-                        <Text style={[styles.fieldLabel, getLabelHeight(this.state.password)]}>Password</Text>
+                        <Text style={[styles.fieldLabel, getLabelHeight(this.state.Pwd)]}>Password</Text>
                         <TextInput
                             placeholder="Password"
                             secureTextEntry={true}
-                            style={[styles.inputTextStyle, getInputHeight(this.state.password)]}
-                            onChangeText={(password) => this.setState({ password })}
-                            value={this.state.password}
+                            style={[styles.inputTextStyle, getInputHeight(this.state.Pwd)]}
+                            onChangeText={(Pwd) => this.setState({ Pwd })}
+                            value={this.state.Pwd}
                             underlineColorAndroid={'transparent'}
                             placeholderTextColor={"#000"}
                         />
                     </View> }
                     {this.state.showLogin && 
                         <TouchableOpacity 
-                            disabled={!this.state.password || !this.state.username}
+                            disabled={!this.state.Pwd || !this.state.Mob_number}
                             style={styles.submit}
                             onPress={this._continueLogin}
                             underlayColor='#fff'>
@@ -239,7 +252,7 @@ export default class SplashPage extends Component {
                     } 
                         {this.state.showLogin && 
                         <TouchableOpacity 
-                           // disabled={!this.state.password || !this.state.username}
+                           // disabled={!this.state.Pwd || !this.state.Mob_number}
                             style={styles.submit}
                             onPress={this._continueToRegister}
                             underlayColor='#fff'>
@@ -261,7 +274,7 @@ export default class SplashPage extends Component {
                 {this.state.logInEroor && 
                     <View style={[styles.logInInfoHolder]}>
                         <TouchableOpacity 
-                            disabled={!this.state.password || !this.state.username}
+                            disabled={!this.state.Pwd || !this.state.Mob_number}
                             style={[styles.submit, styles.yellowColor]}
                             onPress={this._logInTry}
                             underlayColor='#fff'>
@@ -352,7 +365,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     yellowColor: {
-        backgroundColor: '#f5a623',
+        backgroundColor: '#0080d1',
     }
 });
 

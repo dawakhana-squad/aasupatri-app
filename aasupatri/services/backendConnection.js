@@ -4,8 +4,52 @@ _myBackendErrorCB = (err) => {
     ToastAndroid.show("Backend Error" + err, ToastAndroid.SHORT);
 }
 
+export function getHospitalLocation(callBack){
+    fetch('http://192.168.0.7:3002/hospital_directory', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        //Todo, need to validate the response
+        if (responseJson.length === 0) {
+            console.log('data not available');
+        } else {
+            console.log('hospital', responseJson);
+            callBack(responseJson);
+        }
+        // callBack(responseJson.data);
+    })
+    .catch(_myBackendErrorCB);
+}
+
 export function getDoctorList(callBack){
-    fetch('http://192.168.231.37:3002/doctor_info', {
+    fetch('http://192.168.0.7:3002/doctor_info', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        //Todo, need to validate the response
+        if (responseJson.length === 0) {
+            console.log('data not available');
+        } else {
+            console.log('doctor', responseJson);
+            callBack(responseJson);
+        }
+        // callBack(responseJson.data);
+    })
+    .catch(_myBackendErrorCB);
+}
+
+export function getBloodBank(callBack){
+    fetch('http://192.168.0.7:3002/blood_info', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -32,10 +76,10 @@ export function makeLogin(userName, password, callBack){
     callBack(true);
     // 
     const data={
-        Mob_number:9876865678,
-        Pwd:"infinityfault"
+        Ph_No:userName,
+        Pwd:password
     }
-    fetch('http://192.168.231.37:3002/login_details', {
+    fetch('http://192.168.0.7:3002/users_table', {
         method: 'POST',
         body: JSON.stringify(data),
 
@@ -54,23 +98,34 @@ export function makeLogin(userName, password, callBack){
         console.error(error);
     })
 }
-export function makeRegister(userName, password, callBack){
+export function makeRegister(fname, lname,mobilenumber,password,date,bloodgroup,gender, callBack){
     callBack(true);
-    // console.log('https://myspace.innominds.com/loginapi/login?username='+ userName +'&password=' + password + '&grant_type=password');
-    // fetch('https://myspace.innominds.com/loginapi/login?username='+ userName +'&password=' + password + '&grant_type=password', {
-    //     method: 'GET',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //     }
-    // })
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //     //Todo, need to validate the response
-    //     console.log(responseJson);
-    //     callBack(responseJson);
-    // })
-    // .catch((error) => {
-    //     console.error(error);
-    // })
+    console.log(fname);
+    const data={
+        FName:fname,
+        LName:lname,
+        DOB:date,
+        Sex:gender,
+        Pwd:password,
+        Ph_No:mobilenumber,
+        Bloodtype:bloodgroup
+    }
+
+    fetch('http://192.168.0.7:3002/users_table', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        //Todo, need to validate the response
+        console.log(responseJson);
+        callBack(responseJson.data);
+    })
+    .catch((error) => {
+        console.error(error);
+    })
 }

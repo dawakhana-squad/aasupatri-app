@@ -4,21 +4,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 class SearchItem extends PureComponent {
-  _onSelectOfItem = () => {
-    const { onItemSelect } = this.props;
-    onItemSelect(this.props.data);
-  }
-  _onClearSearchHistory = () => {
-    this.props.onClearItem(this.props.data);
-  }
-
+  // _onSelectOfItem = () => {
+  //   const { onItemSelect } = this.props;
+  //   onItemSelect(this.props.data);
+  // }
+  // _onClearSearchHistory = () => {
+  //   this.props.onClearItem(this.props.data);
+  // }
+// onPress={this._onSelectOfItem}
+//onPress={this._onClearSearchHistory}
   render() {
     return (
       <View style={styles.itemStyle}>
-        <TouchableOpacity style={styles.NameHolder} onPress={this._onSelectOfItem}>
+        <TouchableOpacity style={styles.NameHolder}>
           <Text style={styles.mainString}>{this.props.data.searchString}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.closeHolder} onPress={this._onClearSearchHistory}>
+        <TouchableOpacity style={styles.closeHolder} >
           <Text style={[styles.iconStyle]}>
             <FontAwesome>{Icons.times}</FontAwesome>
           </Text>

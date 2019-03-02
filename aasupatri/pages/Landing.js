@@ -10,7 +10,7 @@ import _ from 'lodash';
 const DoctorIcon = require('./../images/doctor.png');
 const HospitalIcon = require('./../images/hospital.png');
 const BloodIcon = require('./../images/blood.png');
-
+const DiagnosisIcon=require('./../images/diagnose.png');
 export default class Listing extends Component {
     constructor(props) {
         super();
@@ -160,36 +160,34 @@ export default class Listing extends Component {
     _continueToHospitalMap=()=>{
         this.props.navigation.navigate('HospitalMap');
     }
+    _continueToHospitalsList=()=>{
+        this.props.navigation.navigate('HospitalsList');
+    }
     _continueToBloodBank=()=>{
         this.props.navigation.navigate('BloodBank');
     }
-
+    _continueToDiagnosis=()=>{
+        this.props.navigation.navigate('Diagnosis');
+    }
     render() {
         return (
             <View style={styles.container}>
-                <Toolbar
-                    centerElement="Asupathri"
-                    ref="toolbar"
-                    searchable={{
-                        autoFocus: true,
-                        placeholder: 'Search',
-                        onSearchPressed: this._onFocusOfSearch,
-                        onSearchClosed: this._onFocusOutOfSearch,
-                        onChangeText: this._onChangeOfSearch
-                    }}
-                />
+           <Text style={styles.mainHeading}>Asupathri</Text>
+           <View style={styles.rowStyle3}>
+                <Text style={{fontWeight:'bold'}}>Willing to Donate Blood?</Text>
                 <Switch
                 style={styles.switch}
                 value={this.state.switch1Value}
                 onValueChange={(val) => this.setState({switch1Value:val})}
 
-                />
+                />  
+                </View>
                 <View style={styles.rowStyle}>
                     <View style={[styles.colStyle, styles.colLeftStyle]}>
                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDoctorsList}>
                             <Image style={styles.ImageStyle}
                                 source={DoctorIcon}/>
-                                <Text style={styles.TextStyle}>Doctors</Text>
+                                <Text style={styles.TextStyle}>Need a Doctor?</Text>
                             
                     </TouchableOpacity>
                     </View>
@@ -205,11 +203,24 @@ export default class Listing extends Component {
                 </View>
                 <View style={styles.rowStyle}>
                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToBloodBank}>
-                              <Text style={styles.TextStyle1}>Blood Availability</Text>
-                            
-                            <Image style={styles.ImageStyle}
+                            <View style={[styles.colStyle, styles.colLeftStyle]}>
+                            <Image style={styles.ImageStyle1}
                                 source={BloodIcon}/>
-                                
+                            </View>    
+                            <View style={[styles.colStyle, styles.colRightStyle]}>  
+                              <Text style={styles.TextStyle1}>Blood Availability</Text>
+                            </View>
+                        </TouchableOpacity>
+                </View>
+                <View style={styles.rowStyle4}>
+                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDiagnosis}>
+                            <View style={[styles.colStyle, styles.colLeftStyle]}>
+                            <Image style={styles.ImageStyle1}
+                                source={DiagnosisIcon}/>
+                            </View>    
+                            <View style={[styles.colStyle, styles.colRightStyle]}>  
+                              <Text style={styles.TextStyle1}>Diagnosis</Text>
+                            </View>
                         </TouchableOpacity>
                 </View>
                 {/* <View style={styles.rowStyle}>
@@ -276,6 +287,40 @@ const styles = StyleSheet.create({
         marginRight:30,
         marginLeft:30,
     },
+    rowStyle1: {
+        height: 150,
+        marginTop:30,
+        marginRight:30,
+        marginLeft:30,
+        flexDirection:'row', 
+        flexWrap:'wrap'
+    },
+    rowStyle2: {
+        height: 100,
+        marginTop:30,
+        paddingBottom:20,
+        marginRight:30,
+        marginLeft:30,
+        flexDirection:'row', 
+        flexWrap:'wrap'
+    },
+    rowStyle3: {
+        //height: 100,
+        marginTop:30,
+        marginRight:30,
+        marginLeft:30,
+        flexDirection:'row', 
+        flexWrap:'wrap'
+    },
+    rowStyle4: {
+        height: 130,
+        marginTop:30,
+        marginRight:30,
+        marginLeft:30,
+        flexDirection:'row', 
+        flexWrap:'wrap'
+    },
+    
     colStyle: {
         flex :1,
         // paddingTop: 40,
@@ -295,41 +340,89 @@ const styles = StyleSheet.create({
         // paddingRight: 40
     },
     colDataStyle :{
-        backgroundColor: '#f5a623',
+        backgroundColor: '#0080d1',
         flex: 1,
-        borderRadius:10
+        borderRadius:10,
     },
+    
 
     ImageStyle:{
         height:70,
         width:70,
         marginTop:20,
         marginLeft:30,
-        //alignContent:'center'
+       // alignContent:'center',
         resizeMode:'center'
     },
+
+    ImageStyle1:{
+        height:70,
+        width:70,
+        marginTop:40,
+        marginLeft:30,
+        alignContent:'center',
+        resizeMode:'center',
+        // paddingBottom:50,
+       
+
+    }, 
 
     TextStyle:{
         marginTop:20,
         marginLeft:10,
         fontSize: 15,
         fontWeight: 'bold',
-		alignContent:'center',
-		justifyContent:'center',
+        
+        color:'white',
+        alignContent:'center',
+        justifyContent:'center',
 
     },
     TextStyle1:{
-        marginTop:50,
-        marginLeft:100,
+        marginTop: -10, 
+        marginLeft:130,
         fontSize: 15,
         fontWeight: 'bold',
-        alignContent:'center'
+        color: 'white',
+        alignContent:'center',
+        //color:'white',     
+        // marginBottom: 80
+
+    },
+    TextStyle2:{
+        marginTop: 18, 
+        marginLeft:120,
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'white',
+        alignContent:'center',
+        //color:'white',     
+        // marginBottom: 80
+
+    },
+    TextStyle3:{
+        //marginTop: 40, 
+        marginRight:120,
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'white',
+        //alignContent:'center',
+        //color:'white',     
+        // marginBottom: 80
 
     },
     switch:{
-        marginTop:10,
-        marginRight:30,
-    }
+        marginTop:0,
+        marginRight:0,
+        marginLeft:130,
+        
+    },
+    mainHeading: {
+        paddingTop:10,
+        paddingLeft:90,
+        fontSize: 40,
+        color: '#0080d1'
+    },
     
 });
 

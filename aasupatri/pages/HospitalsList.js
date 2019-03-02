@@ -107,7 +107,7 @@ export default class DoctorsList extends Component {
                 <TouchableOpacity
                     style={[styles.itemStyle, this.props.style]}
                     disabled={this.props.stopNavigation}
-                    // onPress={this._displayDetails}
+                    onPress={this._displayDetails}
                 >
                     <View style={styles.imageCard}>
                         <Text style={[styles.imageStyle, customStyle]}>
@@ -179,8 +179,7 @@ export default class DoctorsList extends Component {
             text = text.toLowerCase();
             list = [];
             for(let i=0, iLen=this.doctors.length; i < iLen; i++) { 
-                // this.doctors[i].Doctor_name.toLowerCase().indexOf(text) !== -1 ||
-                if ( this.doctors[i].Specialization.toLowerCase().indexOf(text) !== -1) {
+                if (this.doctors[i].Doctor_name.toLowerCase().indexOf(text) !== -1) {
                     list.push(this.doctors[i])
                 }
             }
@@ -213,7 +212,7 @@ export default class DoctorsList extends Component {
                       }}
 					searchable={{
 						autoFocus: true,
-						placeholder: 'Search',
+						placeholder: 'Search by name',
 						onSearchPressed: this._onFocusOfSearch,
 						onSearchClosed: this._onFocusOutOfSearch,
 						onChangeText: this._onChangeOfSearch
@@ -238,7 +237,7 @@ export default class DoctorsList extends Component {
 }
 
 
-AppRegistry.registerComponent('DoctorsList', () => DoctorsList);
+AppRegistry.registerComponent('HospitalsList', () => HospitalsList);
 
 
 const styles = StyleSheet.create({

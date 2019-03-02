@@ -73,7 +73,7 @@ export function initDataBase(sCallBack) {
             /**
              * Create table for pin
              */
-            tx.executeSql("CREATE TABLE IF NOT EXISTS loginInfo (userName, password)", [],
+            tx.executeSql("CREATE TABLE IF NOT EXISTS login_details (Mob_number, Pwd)", [],
             () => { }, (err) => { _mySqlErrorCB(err, 6)});
         }, () => {
             this._closeDataBase(dbConnection);
@@ -133,7 +133,7 @@ export function getSavedLoginInfo(sCallBack) {
             /**
              * getting emp list
              */
-            tx.executeSql("SELECT * from loginInfo", [],
+            tx.executeSql("SELECT * from login_details", [],
                 (tx, results) => {
                     data = this._buildResults(results.rows);
                     result = (data.length)? data[0] : {};
@@ -148,19 +148,20 @@ export function getSavedLoginInfo(sCallBack) {
     }
 }
 
-export function saveLoginInfo(userName, password, sCallBack){
+export function saveLoginInfo(Mob_number, Pwd, sCallBack){
     let dbConnection = this._openDataBase();
     if (dbConnection) {
         dbConnection.transaction((tx) => {
             /**
              * deleting current info
              */
-            tx.executeSql("DELETE from loginInfo", [],
+            tx.executeSql("DELETE from login_details", [],
             () => { }, (err) => { _mySqlErrorCB(err, 10)});
             /**
              * Updating last updates
              */
-            tx.executeSql("INSERT INTO loginInfo(userName, password) VALUES (?, ?)", [userName, password],
+            // tx.executeSql("INSERT INTO login_details(Mob_number, Pwd) VALUES (?, ?)", [Mob_number, Pwd],
+            tx.executeSql("SELECT * FROM login_details WHERE Mob_number = ? AND Pwd = ?", [Mob_number, Pwd],
             () => { }, (err) => { _mySqlErrorCB(err, 11)});
         }, () => {
             this._closeDataBase(dbConnection);

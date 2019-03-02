@@ -10,21 +10,35 @@ export default class Register extends React.Component {
         super(props);
         this.state = {
             message: 'Loading application',
-            color: '#f5a623',
+            color: '#0080d1',
             firstname: '',
             lastname: '',
             mobilenumber: '',
             password: '',
             date: null,
-            bloodGroup:null,
-            gender:null,
+            bloodGroup:'',
+            gender: '',
         }
         this.navigation = this.props.navigation;
     }
 
     _continueRegister = () => {
-        message:'Successfully Registered'
-        this.props.navigation.goBack();
+        makeRegister(this.state.firstname, 
+                    this.state.lastname,
+                    this.state.mobilenumber,
+                    this.state.password,
+                    this.state.date,
+                    this.state.bloodGroup,
+                    this.state.gender,
+                    (res) => {
+                        if (res) {
+                            message:'Successfully Registered'
+                            this.props.navigation.goBack();
+                        } else {
+                            message: 'not successfully registerd'
+                        }
+        }); 
+                        
     }
 
     render() {
@@ -155,7 +169,7 @@ export default class Register extends React.Component {
                         <TouchableOpacity
                             //disabled={!this.state.userid || !this.state.firstname||!this.state.lastname || !this.state.mobilenumber|| !this.state.password }
                             style={styles.submit}
-                            onPress={this._continueRegister}
+                            onPress={this._continueRegister}//{this._}
                             //onPress={() => this.props.navigation.goBack()}
                             //onPress={this._goBackToSplash}
                             underlayColor='#fff'>
@@ -252,7 +266,7 @@ const styles = StyleSheet.create({
             marginBottom:25,
     },
     yellowColor: {
-        backgroundColor: '#f5a623',
+        backgroundColor: '#0080d1',
     }
 });
 AppRegistry.registerComponent('Register', () => Register);
