@@ -64,6 +64,12 @@ export function initDataBase(sCallBack) {
             tx.executeSql("CREATE TABLE IF NOT EXISTS appAuth (pin)", [],
             () => { }, (err) => { _mySqlErrorCB(err, 5)});
 
+             /**
+             * Creating recent table if not present
+             */
+            tx.executeSql("CREATE TABLE IF NOT EXISTS recentSearch (searchString)", [],
+                () => { }, (err) => { _mySqlErrorCB(err, 3) });
+
             /**
              * Create table for pin
              */
@@ -237,26 +243,26 @@ export function updateSearchInfo(insertString, deleteString) {
     let dbConnection = this._openDataBase();
     if (dbConnection) {
         dbConnection.transaction((tx) => {
-            if(deleteString) {
+            if (deleteString) {
                 /**
                  * getting emp list
                  */
                 tx.executeSql("DELETE from recentSearch WHERE searchString='" + deleteString + "'", [],
-                    () => {}, (err) => { _mySqlErrorCB(err, 19)});
+                    () => { }, (err) => { _mySqlErrorCB(err, 19) });
             }
-            if(insertString){
+            if (insertString) {
                 /**
                  * getting emp list
                  */
                 tx.executeSql("INSERT INTO recentSearch (searchString) VALUES ('" + insertString + "')", [],
-                () => {}, (err) => { _mySqlErrorCB(err, 20)});
+                    () => { }, (err) => { _mySqlErrorCB(err, 20) });
             }
         }, () => {
             this._closeDataBase(dbConnection);
         },
-        () => {
-            this._closeDataBase(dbConnection);
-        });
+            () => {
+                this._closeDataBase(dbConnection);
+            });
     }
 }
 
@@ -270,7 +276,7 @@ export function retrieveSearchList(sCallBack) {
             tx.executeSql("SELECT * from recentSearch", [],
                 (tx, results) => {
                     result = this._buildResults(results.rows);
-                }, (err) => { _mySqlErrorCB(err, 21)});
+                }, (err) => { _mySqlErrorCB(err, 21) });
         }, () => {
             this._closeDataBase(dbConnection);
         },

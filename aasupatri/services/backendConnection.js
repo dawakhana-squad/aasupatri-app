@@ -19,7 +19,7 @@ export function getDoctorList(callBack){
             console.log('data not available');
         } else {
             console.log('doctor', responseJson);
-            return responseJson;
+            callBack(responseJson);
         }
         // callBack(responseJson.data);
     })

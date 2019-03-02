@@ -160,6 +160,9 @@ export default class Listing extends Component {
     _continueToHospitalMap=()=>{
         this.props.navigation.navigate('HospitalMap');
     }
+    _continueToBloodBank=()=>{
+        this.props.navigation.navigate('BloodBank');
+    }
 
     render() {
         return (
@@ -201,7 +204,7 @@ export default class Listing extends Component {
                     </View>
                 </View>
                 <View style={styles.rowStyle}>
-                        <TouchableOpacity style={styles.colDataStyle}>
+                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToBloodBank}>
                               <Text style={styles.TextStyle1}>Blood Availability</Text>
                             
                             <Image style={styles.ImageStyle}
