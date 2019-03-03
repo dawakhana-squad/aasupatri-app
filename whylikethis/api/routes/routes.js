@@ -3,10 +3,10 @@ const pool = require('../data/config');
 
 const router = app => {
     //hospital directory table group by district
-     app.get('/hospital_directory/:District', (request, response) => {
-        const District = request.params.District;
+     app.get('/hospital_directory', (request, response) => {
+        //const District = request.params.District;
     
-        pool.query('SELECT Location_Coordinates,Hospital_Name FROM hospital_directory WHERE District = ?', District, (error, result) => {
+        pool.query("SELECT * FROM hospital_directory WHERE District = 'Hyderabad' AND Mobile_Number <> '0' AND Location_Coordinates <> ('NA' OR 'Error')", (error, result) => {
             if (error) throw error;
    
             response.send(result);
@@ -15,8 +15,10 @@ const router = app => {
     
      // Doctor information table 
      app.get('/doctor_info', (request, response) => {
+
+        
             
-        pool.query('SELECT * FROM doctor_info', (error, result) => {
+        pool.query('SELECT * FROM doctor_info ORDER BY Doctor_name ', (error, result) => {
             if (error) throw error;
    
             response.send(result);
@@ -53,7 +55,8 @@ const router = app => {
             "data": ""
         };
 
-        pool.query('SELECT * FROM Login_details WHERE Mob_number = ? AND Pwd = ? ', [Mob_number,Pwd],function(error, rows,fields) {
+        pool.query('SELECT * FROM Login_details WHERE Mob_number = ? AND Pwd = ? ', [Mob_number,Pwd],
+        function(error, rows,fields,result) {
             if (error) throw error;
             console.log(rows, 'rows', Mob_number, Pwd);
             if(rows.length != 0){
@@ -62,7 +65,8 @@ const router = app => {
             }else{
                 data["data"] = false;
                 response.json(data);
-            }   
+            } 
+            response.send(result)  
         });
     });
 
@@ -79,7 +83,11 @@ const router = app => {
         "Ph_No" : request.body.Ph_No,
         "Bloodtype" : request.body.Bloodtype
         }
+        const data = {
+            "data": ""
+        };      
 
+        if(request.body.FName) {
         pool.query('INSERT INTO users_table SET ?', users, function(error,results, fields) {
             if (error) {
                 console.log("error ocurred",error);
@@ -96,6 +104,21 @@ const router = app => {
                  });
               }  
          });
+        } else {
+            pool.query('SELECT * FROM users_table WHERE Ph_No = ? AND Pwd = ? ', [users.Ph_No,users.Pwd],
+            function(error, rows,fields,result) {
+             if (error) throw error;
+             //console.log(rows, 'rows', Ph_No, Pwd);
+             if(rows.length != 0){
+                 data["data"] = true;
+                 response.json(data);
+             }else{
+                 data["data"] = false;
+                 response.json(data);
+             } 
+             response.send(result)  
+            });
+        }
 
     });
 }
