@@ -14,6 +14,7 @@ import Diagnosis from './pages/Diagnosis';
 import HospitalsList from './pages/HospitalsList';
 import Details from './pages/Details';
 import heart from './pages/heart';
+import RatingPage from './pages/RatingPage';
 
 const Asupathri = createStackNavigator({
   Home: {screen: SplashPage, navigationOptions: { header: null }},
@@ -26,6 +27,7 @@ const Asupathri = createStackNavigator({
   Diagnosis: {screen: Diagnosis, navigationOptions: { header: null }},
   Details: {screen: Details, navigationOptions: { header: null }},
   heart: {screen: heart, navigationOptions: { header: null }},
+  RatingPage: {screen: RatingPage, navigationOptions: { header: null }},
 },{
   header:{ visible:false }
 });

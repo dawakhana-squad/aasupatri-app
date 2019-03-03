@@ -45,14 +45,15 @@ export default class Details extends Component {
             () => {
               return (
                 <View style={styles.onImageInfo}>
-                  <View style={styles.backTile}>
-                  </View>
                   <View style={styles.nameCard}>
                     <Text style={styles.desgInfoMiddle}>
-                      {this.docDetails.Specialization}
+                      Qualification: {this.docDetails.Qualification}
                     </Text>
                     <Text style={styles.praticeMiddle}>
-                      {this.docDetails.Specialization} Specialization
+                      Specialization: {this.docDetails.Specialization}
+                    </Text>
+                    <Text style={styles.praticeMiddle}>
+                      Experience: {this.docDetails.Experience}
                     </Text>
                   </View>
                 </View>
@@ -62,12 +63,9 @@ export default class Details extends Component {
           renderTouchableFixedForeground={() => {
             return (
               <View style={styles.itemStyle}>
-                {/* <TouchableOpacity style={styles.backTile} onPress={this._goBack}>
-                  {this.renderIcon(back)}
-                </TouchableOpacity> */}
                 <View style={styles.nameCard}>
                   <Text style={styles.mainName}>
-                    {this.docDetails.Doctor_name}
+                    Doctor Name: {this.docDetails.Doctor_name}
                   </Text>
                 </View>
               </View>
@@ -76,9 +74,10 @@ export default class Details extends Component {
           renderHeader={() => (
             <Image source={require('../images/doctor.png')}
               resizeMode={'contain'}
-              style={{ width: '100%', height: this.screenWidth, backgroundColor: '#0080d1' }}
+              style={{ width: '100%', height: '70%', backgroundColor: '#0080d1' }}
             />
           )}>
+
           {/* {this._buildContactInformation('Work', this.empDetails.companyNumber, 'phone')}
           {this._buildContactInformation('Personal', this.empDetails.personalNumber, 'phone')}
           {this._buildContactInformation('Alternative', this.empDetails.altNumber, 'phone')}
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     height: 55
   },
   backTile: {
-    flex: 10,
+    // flex: 10,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -112,72 +111,34 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   nameCard: {
-    flex: 90,
+    marginTop: 275,
+    // flex: 90,
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 1
   },
   mainName: {
     fontSize: 18,
-    color: '#fff'
+    color: '#000'
   },
   onImageInfo: {
     position: 'absolute',
     bottom: 5,
     left: 0,
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
   desgInfoMiddle: {
     fontSize: 15,
-    color: '#fff'
+    color: '#000',
+    marginBottom:5
   },
   praticeMiddle: {
-    fontSize: 12,
-    color: '#fff'
-  },
-  eachInfoHolder: {
-    flexDirection: 'row',
-    height: 70,
-  },
-  phoneNumberHolder: {
-    paddingLeft: 20,
-    flex: 80,
-    justifyContent: 'center'
-  },
-  phoneNumberActions: {
-    flex: 20,
-    justifyContent: 'center',
-    alignItems: 'flex-end'
-  },
-  subText: {
-    fontSize: 12,
-    color: '#999999'
-  },
-  mainText: {
-    fontSize: 16,
-    fontWeight: 'bold'
+    fontSize: 15,
+    color: '#000',
+    marginBottom:0
   },
   actionsHolder: {
     flexDirection: 'row'
-  },
-  optionTile: {
-    flex: 50
-  },
-  iconStyle: {
-    fontSize: 24
-  },
-  callIcon: {
-    marginTop: 3,
-    color: '#00bb00'
-  },
-  messageIcon: {
-    color: '#ffac14'
-  },
-  emailIcon: {
-    color: '#7575ff'
-  },
-  skypeIcon: {
-    color: '#00aff0',
-    fontSize: 26
   }
 });
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Image,Switch, Text, AppRegistry, StyleSheet, View, TouchableOpacity } from 'react-native';
+import {Image,Switch, Text, AppRegistry, StyleSheet, View, TouchableOpacity, DrawerLayoutAndroid } from 'react-native';
 //import ContactItem from '../components/ContactItem';
 //import SearchItem from '../components/SearchItem';
 import { Toolbar } from 'react-native-material-ui';
@@ -7,10 +7,18 @@ import { retrieveEmployeeList, retrieveSearchList, updateSearchInfo } from "../s
 import _ from 'lodash';
 //import { Switch } from 'react-native-gesture-handler';
 //import {FeedbackElement} from './feedback'
+import MenuItem from '../components/MenuItem'
 const DoctorIcon = require('./../images/doctor.png');
 const HospitalIcon = require('./../images/hospital.png');
 const BloodIcon = require('./../images/blood.png');
 const DiagnosisIcon=require('./../images/diagnose.png');
+const menuIcons = {
+	// myDetails: require('./../assets/images/mydetails.png'),
+	// logout: require('./../assets/images/logout.png'),
+	// sync: require('./../assets/images/sync.png'),
+	rating: require('../images/logo.png')
+}
+
 export default class Listing extends Component {
     constructor(props) {
         super();
@@ -151,8 +159,52 @@ export default class Listing extends Component {
             this.searchString = item.name;
             this._updateTheSearchTable();
         }
+    }
+    //------------MENU--------------
+    _openCurrentDetails = () => {
+		if (this.drawer) {
+			this.drawer.openDrawer();
+		}
+		this.props.navigation.navigate('DetailsPage', this.state.currentUser
+		);
+    }
+    _openFeedBack = () => {
+		if (this.drawer) {
+			this.drawer.closeDrawer();
+		}
+		this.props.navigation.navigate('RatingPage');
+    }
+    
+    _logOut = () => {
+		// Works on both iOS and Android
+		Alert.alert(
+			'Alert',
+			'Are you sure you want to logout?',
+			[
+				{ text: 'Logout', onPress: this._handleLogout },
+				{
+					text: 'Get Back', onPress: () => {
+						if (this.drawer) {
+							this.drawer.closeDrawer();
+						}
+					}
+				}
+			],
+			{ cancelable: false }
+		)
+    }
+    _handleLogout = () => {
+		clearDataBase();
+		this.props.navigation.dispatch(NavigationActions.reset(
+			{
+				index: 0,
+				actions: [
+					NavigationActions.navigate({ routeName: 'Home' })
+				]
+			}
+		));
 	}
-	
+	 //------------MENU--------------
 
 	_continueToDoctorsList=()=>{
 		this.props.navigation.navigate('DoctorsList');
@@ -169,74 +221,107 @@ export default class Listing extends Component {
     _continueToDiagnosis=()=>{
         this.props.navigation.navigate('Diagnosis');
     }
+    _renderMenuItems = () => {
+		return (
+			<View style={styles.menuContainer}>
+				<View style={styles.menuList}>
+					{/* <MenuItem
+						title={'My details'}
+						icon={menuIcons.myDetails}
+						onPress={this._openCurrentDetails}
+					/> */}
+					<MenuItem
+						title={'Send Feedback'}
+						icon={menuIcons.feedback}
+						onPress={this._openFeedBack}
+					/>
+					<MenuItem
+						title={'Logout'}
+						icon={menuIcons.logout}
+						onPress={this._logOut}
+					/>
+				</View>
+			</View>
+		);
+    }
+    _pageBody = () => {
+		return (
+            <View>
+            <Text style={styles.mainHeading}>Asupathri</Text>
+            <View style={styles.rowStyle3}>
+                 <Text style={{fontWeight:'bold'}}>Willing to Donate Blood?</Text>
+                 <Switch
+                 style={styles.switch}
+                 value={this.state.switch1Value}
+                 onValueChange={(val) => this.setState({switch1Value:val})}
+ 
+                 />  
+                 </View>
+                 <View style={styles.rowStyle}>
+                     <View style={[styles.colStyle, styles.colLeftStyle]}>
+                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDoctorsList}>
+                             <Image style={styles.ImageStyle}
+                                 source={DoctorIcon}/>
+                                 <Text style={styles.TextStyle}>Need a Doctor?</Text>
+                             
+                     </TouchableOpacity>
+                     </View>
+                     <View style={[styles.colStyle, styles.colRightStyle]}>
+                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToHospitalMap}>
+                             
+                             <Image style={styles.ImageStyle}
+                                 source={HospitalIcon}/>
+                                 <Text style={styles.TextStyle}>Search Hospitals</Text>
+ 
+                         </TouchableOpacity>
+                     </View>
+                 </View>
+                 <View style={styles.rowStyle}>
+                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToBloodBank}>
+                             <View style={[styles.colStyle, styles.colLeftStyle]}>
+                             <Image style={styles.ImageStyle1}
+                                 source={BloodIcon}/>
+                             </View>    
+                             <View style={[styles.colStyle, styles.colRightStyle]}>  
+                               <Text style={styles.TextStyle1}>Blood Availability</Text>
+                             </View>
+                         </TouchableOpacity>
+                 </View>
+                 <View style={styles.rowStyle4}>
+                         <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDiagnosis}>
+                             <View style={[styles.colStyle, styles.colLeftStyle]}>
+                             <Image style={styles.ImageStyle1}
+                                 source={DiagnosisIcon}/>
+                             </View>    
+                             <View style={[styles.colStyle, styles.colRightStyle]}>  
+                               <Text style={styles.TextStyle1}>Diagnosis</Text>
+                             </View>
+                         </TouchableOpacity>
+                 </View>
+                 </View>
+		);
+
+	}
     render() {
         return (
             <View style={styles.container}>
-           <Text style={styles.mainHeading}>Asupathri</Text>
-           <View style={styles.rowStyle3}>
-                <Text style={{fontWeight:'bold'}}>Willing to Donate Blood?</Text>
-                <Switch
-                style={styles.switch}
-                value={this.state.switch1Value}
-                onValueChange={(val) => this.setState({switch1Value:val})}
-
-                />  
-                </View>
-                <View style={styles.rowStyle}>
-                    <View style={[styles.colStyle, styles.colLeftStyle]}>
-                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDoctorsList}>
-                            <Image style={styles.ImageStyle}
-                                source={DoctorIcon}/>
-                                <Text style={styles.TextStyle}>Need a Doctor?</Text>
-                            
-                    </TouchableOpacity>
-                    </View>
-                    <View style={[styles.colStyle, styles.colRightStyle]}>
-                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToHospitalMap}>
-                            
-                            <Image style={styles.ImageStyle}
-                                source={HospitalIcon}/>
-                                <Text style={styles.TextStyle}>Search Hospitals</Text>
-
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.rowStyle}>
-                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToBloodBank}>
-                            <View style={[styles.colStyle, styles.colLeftStyle]}>
-                            <Image style={styles.ImageStyle1}
-                                source={BloodIcon}/>
-                            </View>    
-                            <View style={[styles.colStyle, styles.colRightStyle]}>  
-                              <Text style={styles.TextStyle1}>Blood Availability</Text>
-                            </View>
-                        </TouchableOpacity>
-                </View>
-                <View style={styles.rowStyle4}>
-                        <TouchableOpacity style={styles.colDataStyle} onPress={this._continueToDiagnosis}>
-                            <View style={[styles.colStyle, styles.colLeftStyle]}>
-                            <Image style={styles.ImageStyle1}
-                                source={DiagnosisIcon}/>
-                            </View>    
-                            <View style={[styles.colStyle, styles.colRightStyle]}>  
-                              <Text style={styles.TextStyle1}>Diagnosis</Text>
-                            </View>
-                        </TouchableOpacity>
-                </View>
-                {/* <View style={styles.rowStyle}>
-                        <TouchableOpacity style={styles.colDataStyle}>
-                            
-                        </TouchableOpacity>
-                </View> */}
-                
-            
+            <DrawerLayoutAndroid
+                drawerWidth={200}
+                drawerPosition={DrawerLayoutAndroid.positions.Left}
+                renderNavigationView={this._renderMenuItems}
+                ref={(dra) => { !this.drawer ? this.drawer = dra : null }}
+                    
+			>
+                {this._pageBody()}
+			</DrawerLayoutAndroid>
             </View>
+            );
+    }
+}
 
 
 
 
-            // <View style={styles.container}>
-            //  <Toolbar
             //      centerElement="Asupathri"
             //      ref="toolbar"
             //      searchable={{
@@ -271,11 +356,18 @@ export default class Listing extends Component {
             //      />
             //  }
             // </View>
-        );
-    }
-}
 
 const styles = StyleSheet.create({
+    // menuContainer: {
+	// 	flex: 1,
+    //     backgroundColor: '#0080d1',
+    
+    // },
+    // menuList: {
+    //     flex: 1,
+    //     height:100,
+	// 	marginTop: 150
+	// },
     container: {
         flex: 1,
         backgroundColor: '#ffffff'
@@ -414,7 +506,7 @@ const styles = StyleSheet.create({
     switch:{
         marginTop:0,
         marginRight:0,
-        marginLeft:130,
+        marginLeft:150,
         
     },
     mainHeading: {

@@ -52,6 +52,9 @@ export default class DoctorItem extends Component {
         <View style={styles.nameCard}>
         <Text numberOfLines={1} style={styles.mainName}>{this.props.data.Doctor_name}</Text>
         <Text numberOfLines={1} style={styles.designation}>{this.props.data.Specialization}</Text>
+        {/* <Text numberOfLines={1} style={styles.mainName}>{this.props.data.Experience}</Text> */}
+        {/* <Text numberOfLines={1} style={styles.designation}>{this.props.data.Qualification}</Text> */}
+
           {/* <Text numberOfLines={!this.props.stopNavigation ? 1 : 2} style={[styles.mainName, this.props.nameStyle]}>{this.props.data.Doctor_name}</Text>
           <Text numberOfLines={!this.props.stopNavigation ? 1 : 2} style={[styles.designation, this.props.infoStyle]}>{this.props.data.Specialization}</Text> */}
         </View>

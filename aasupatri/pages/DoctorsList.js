@@ -164,6 +164,14 @@ export default class DoctorsList extends Component {
                         <Text numberOfLines={1} style={[styles.mainName, this.props.nameStyle]}>{item.Doctor_name}</Text>
                         <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.Specialization}</Text>
                     </View>
+                    <View>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => alert('Appointment Booked!')}
+                            underlayColor='#fff'>
+                            <Text style={[styles.submitText]}>Book Appointment </Text>
+                        </TouchableOpacity>
+                    </View> 
                 </TouchableOpacity>
             </View>
         );
@@ -311,6 +319,10 @@ const styles = StyleSheet.create({
         flex: 60,
         alignItems: 'flex-start',
         justifyContent: 'center'
+    },
+    button:{
+        height:20,
+        width:65
     },
     mainName: {
         fontSize: 15

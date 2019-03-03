@@ -118,7 +118,6 @@ export default class BloodBank extends Component {
 
                     <View style={styles.nameCard}>
                         <Text numberOfLines={1} style={[styles.mainName, this.props.nameStyle]}>{item.hospital_name}</Text>
-                        <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.Hospital_ID}</Text>
                         <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.UnitsAplus} Units Available</Text>
 
                         {/* <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.UnitsAminus} A-ve Units Available</Text>
