@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, AppRegistry, StyleSheet, View, Dimensions, FlatList, Image, DrawerLayoutAndroid, Text, Alert } from 'react-native';
 import { RecyclerListView, LayoutProvider, DataProvider, RefreshControl } from "recyclerlistview";
-import { getDoctorList } from '../services/backendConnection';
+import { getHospitalsList } from '../services/backendConnection';
 let { width } = Dimensions.get('window');
 const DoctorIcon = require('./../images/doctor.png');
 import { Toolbar } from 'react-native-material-ui';
 import { retrieveSearchList, updateSearchInfo } from '../services/databaseConnection';
+// const geolib = require('geolib');
 import _ from 'lodash';
 import SearchItem from '../components/SearchItem';
 export default class DoctorsList extends Component {
@@ -13,11 +14,16 @@ export default class DoctorsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            cord: {
+                latitude: 37.78825,
+                longitude: -122.4324,
+            },
             dataProvider: new DataProvider((r1, r2) => {
                 return r1.id !== r2.id
             }),
             searchList: [],
-            showEmpList: true
+            showEmpList: true,
+            sortByNear: [],
         };
         this._layoutProvider = new LayoutProvider((i) => {
             return this.state.dataProvider.getDataForIndex(i);
@@ -28,17 +34,35 @@ export default class DoctorsList extends Component {
         this._renderRow = this._renderRow.bind(this);
 
         this.navigation = this.props.navigation;
-        this._getEmployeeData();
+        this._getHospitalData();
     }
 
-    _getEmployeeData = () => {
-        getDoctorList((list) => {
+    // componentDidMount() {
+    //     navigator.geolocation.getCurrentPosition(
+    //        (position) => {
+    //          console.log('pos', position);
+    //          this.setState({
+    //            cord:{
+    //                latitude: position.coords.latitude,
+    //                 longitude: position.coords.longitude,
+    //            },
+    //            error: null,
+    //          });
+    //        },
+    //        (error) => this.setState({ error: error.message }),
+    //        { enableHighAccuracy: false, timeout: 200000 },
+    //     );
+    // }
+
+    _getHospitalData = () => {
+        getHospitalsList((list) => {
             this.doctors = list;
             this.setState({
                 showEmpList: true,
                 dataProvider: this.state.dataProvider.cloneWithRows(list)
             });
         });
+        
     }
 
 
@@ -83,10 +107,27 @@ export default class DoctorsList extends Component {
 			searchList: this.state.searchList.filter((_) => _ !== item)
 		});
 		updateSearchInfo(null, item.searchString);
-	}
+    }
+    
+    makeCall= (event) => {
+        console.log(event);
+        var SendIntentAndroid = require('react-native-send-intent');
+        SendIntentAndroid.sendPhoneCall('9700020678');
+    }
 
+    // sortArrayAsc(array, key) {
+    //     return array.sort(function (a,b) {
+    //       console.info(b.amount)
+    //       return b.amount < a.amount ? -1
+    //            : b.amount > a.amount ? 1
+    //            : 0
+    //     })
+    //   }
 
     _renderRow(type, item) {
+        // var item = geolib.orderByDistance(this.state.cord, this.state.sortByNear);
+        // console.log('afsgdv', item);
+
         let customStyle = {};
         if (!this.props.stopNavigation) {
             const id = Number(item.DrReg_no);
@@ -106,18 +147,17 @@ export default class DoctorsList extends Component {
             
                 <TouchableOpacity
                     style={[styles.itemStyle, this.props.style]}
-                    disabled={this.props.stopNavigation}
-                    onPress={this._displayDetails}
+                    onPress={(evt) => this.makeCall(evt)}
                 >
                     <View style={styles.imageCard}>
                         <Text style={[styles.imageStyle, customStyle]}>
-                            {this._buildNameImg(item.Doctor_name)}
+                            {this._buildNameImg(item.Hospital_Name)}
                         </Text>
                     </View>
 
                     <View style={styles.nameCard}>
-                        <Text numberOfLines={1} style={[styles.mainName, this.props.nameStyle]}>{item.Doctor_name}</Text>
-                        <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.Specialization}</Text>
+                        <Text numberOfLines={1} style={[styles.mainName, this.props.nameStyle]}>{item.Hospital_Name}</Text>
+                        <Text numberOfLines={1} style={[styles.designation, this.props.infoStyle]}>{item.Mobile_Number}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -179,7 +219,8 @@ export default class DoctorsList extends Component {
             text = text.toLowerCase();
             list = [];
             for(let i=0, iLen=this.doctors.length; i < iLen; i++) { 
-                if (this.doctors[i].Doctor_name.toLowerCase().indexOf(text) !== -1) {
+                // this.doctors[i].Doctor_name.toLowerCase().indexOf(text) !== -1 ||
+                if ( this.doctors[i].Hospital_Name.toLowerCase().indexOf(text) !== -1) {
                     list.push(this.doctors[i])
                 }
             }
@@ -212,7 +253,7 @@ export default class DoctorsList extends Component {
                       }}
 					searchable={{
 						autoFocus: true,
-						placeholder: 'Search by name',
+						placeholder: 'Search by Hospital Name',
 						onSearchPressed: this._onFocusOfSearch,
 						onSearchClosed: this._onFocusOutOfSearch,
 						onChangeText: this._onChangeOfSearch

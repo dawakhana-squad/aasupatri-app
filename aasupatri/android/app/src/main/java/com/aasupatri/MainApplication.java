@@ -7,6 +7,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 
 
 import com.facebook.react.ReactApplication;
+import com.burnweb.rnsendintent.RNSendIntentPackage;
 import com.horcrux.svg.SvgPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new VectorIconsPackage(),
             new MainReactPackage(),
+            new RNSendIntentPackage(),
             new SvgPackage(),
             new MapsPackage()
       );

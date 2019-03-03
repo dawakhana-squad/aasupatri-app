@@ -12,6 +12,8 @@ import HospitalMap from './pages/HospitalMap';
 import BloodBank from './pages/BloodBank';
 import Diagnosis from './pages/Diagnosis';
 import HospitalsList from './pages/HospitalsList';
+import Details from './pages/Details';
+import heart from './pages/heart';
 
 const Asupathri = createStackNavigator({
   Home: {screen: SplashPage, navigationOptions: { header: null }},
@@ -21,9 +23,9 @@ const Asupathri = createStackNavigator({
   HospitalMap: {screen: HospitalMap, navigationOptions: { header: null }},
   HospitalsList: {screen: HospitalsList, navigationOptions: { header: null }},
   BloodBank: {screen: BloodBank, navigationOptions: { header: null }},
-  Diagnosis: {screen: Diagnosis, navigationOptions: { header: null }}
-  // DetailsPage: {screen: DetailsPage, navigationOptions: { header: null }},
-//  FeedbackPage: {screen: FeedbackPage, navigationOptions: { header: null }}
+  Diagnosis: {screen: Diagnosis, navigationOptions: { header: null }},
+  Details: {screen: Details, navigationOptions: { header: null }},
+  heart: {screen: heart, navigationOptions: { header: null }},
 },{
   header:{ visible:false }
 });

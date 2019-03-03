@@ -99,6 +99,7 @@ export default class HospitalMap extends Component {
    }
 
   renderScreen = () => {
+    console.log('state', this.state);
       return (
         <View style={styles.container}>
           <MapView

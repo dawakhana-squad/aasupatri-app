@@ -4,7 +4,7 @@ _myBackendErrorCB = (err) => {
     ToastAndroid.show("Backend Error" + err, ToastAndroid.SHORT);
 }
 
-export function getHospitalLocation(callBack){
+export function getHospitalsList(callBack){
     fetch('http://192.168.0.7:3002/hospital_directory', {
         method: 'GET',
         headers: {

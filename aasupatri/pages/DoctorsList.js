@@ -8,6 +8,8 @@ import { Toolbar } from 'react-native-material-ui';
 import { retrieveSearchList, updateSearchInfo } from '../services/databaseConnection';
 import _ from 'lodash';
 import SearchItem from '../components/SearchItem';
+import DoctorItem from '../components/DoctorItem';
+import Details from './Details';
 export default class DoctorsList extends Component {
     doctors= [];
     constructor(props) {
@@ -16,8 +18,10 @@ export default class DoctorsList extends Component {
             dataProvider: new DataProvider((r1, r2) => {
                 return r1.id !== r2.id
             }),
+            empList: [],
             searchList: [],
-            showEmpList: true
+            showEmpList: true,
+            docData: [],
         };
         this._layoutProvider = new LayoutProvider((i) => {
             return this.state.dataProvider.getDataForIndex(i);
@@ -27,10 +31,19 @@ export default class DoctorsList extends Component {
         });
         this._renderRow = this._renderRow.bind(this);
 
-        this.navigation = this.props.navigation;
+        // this.navigation = this.props.navigation;
         this._getEmployeeData();
+        // this._getDoctorsData();
     }
 
+        
+    _displayDetails = () => {
+        console.log('docdata', this.state.docData);
+        if(!this.props.stopNavigation){
+            // this.props.onItemSelect(this.state.docData);
+            this.props.navigation.navigate('Details', this.state.docData);
+        }
+    }
     _getEmployeeData = () => {
         getDoctorList((list) => {
             this.doctors = list;
@@ -40,6 +53,14 @@ export default class DoctorsList extends Component {
             });
         });
     }
+    // _getDoctorsData = () => {
+    //     getDoctorList((list) => {
+    //         this.empList = list;
+    //         this.setState({
+    //             empList: list
+    //         });
+    //     });
+    // }
 
 
     _buildNameImg = (name) => {
@@ -50,11 +71,10 @@ export default class DoctorsList extends Component {
         return list[0].charAt(0) + list[list.length - 1].charAt(0);
     }
 
-    _displayDetails = (item) => {
-        if (!this.props.stopNavigation) {
-            this.props.onItemSelect(item);
-        }
-    }
+    // _continueToDetails=()=>{
+    //     console.log(this.props.data);
+	// 	this.props.navigation.navigate('Details',this.props.data);
+    // }
     _renderRowForSearch = (item) => {
 		return (
 			<SearchItem
@@ -83,10 +103,35 @@ export default class DoctorsList extends Component {
 			searchList: this.state.searchList.filter((_) => _ !== item)
 		});
 		updateSearchInfo(null, item.searchString);
-	}
+    }
+    // <----------------------------->
+    // _updateTheSearchTable = (insertItem) => {
+	// 	let deleteItem = null;
+	// 	let delete_id = _.find(this.state.searchList, (obj) => {
+	// 		return obj.searchString === insertItem;
+	// 	});
+	// 	if (!delete_id) {
+	// 		if (this.state.searchList.length === 10) {
+	// 			deleteItem = this.state.searchList[10]
+	// 		}
+	// 	} else {
+	// 		deleteItem = insertItem;
+	// 	}
+	// 	updateSearchInfo(insertItem, deleteItem);
+    // }
+    
+    // _onItemSelectDoc = (item) => {
+	// 	if (this.searchEnabled) {
+	// 		this._updateTheSearchTable(item.name);
+	// 		this.searchString = null;
+	// 	}
+	// }
 
 
     _renderRow(type, item) {
+        this.setState({
+            docData: item,
+        });
         let customStyle = {};
         if (!this.props.stopNavigation) {
             const id = Number(item.DrReg_no);
@@ -107,7 +152,7 @@ export default class DoctorsList extends Component {
                 <TouchableOpacity
                     style={[styles.itemStyle, this.props.style]}
                     disabled={this.props.stopNavigation}
-                    // onPress={this._displayDetails}
+                    onPress={this._displayDetails}
                 >
                     <View style={styles.imageCard}>
                         <Text style={[styles.imageStyle, customStyle]}>
@@ -179,7 +224,6 @@ export default class DoctorsList extends Component {
             text = text.toLowerCase();
             list = [];
             for(let i=0, iLen=this.doctors.length; i < iLen; i++) { 
-                // this.doctors[i].Doctor_name.toLowerCase().indexOf(text) !== -1 ||
                 if ( this.doctors[i].Specialization.toLowerCase().indexOf(text) !== -1) {
                     list.push(this.doctors[i])
                 }
@@ -236,10 +280,6 @@ export default class DoctorsList extends Component {
         )
     };
 }
-
-
-AppRegistry.registerComponent('DoctorsList', () => DoctorsList);
-
 
 const styles = StyleSheet.create({
     container: {
@@ -309,4 +349,7 @@ const styles = StyleSheet.create({
     }
 
 });
+
+AppRegistry.registerComponent('DoctorsList', () => DoctorsList);
+
 

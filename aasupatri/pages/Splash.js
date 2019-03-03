@@ -89,7 +89,10 @@ export default class SplashPage extends Component {
     }
 
     _continueToLandingPage=()=>{
-        this.props.navigation.navigate('Landing')
+        this.props.navigation.navigate('Landing');
+    }
+    _continueToHospitalsList=()=>{
+        this.props.navigation.navigate('HospitalsList');
     }
     
     /**
@@ -260,7 +263,7 @@ export default class SplashPage extends Component {
                         </TouchableOpacity>
                     }
                 </View>
-
+            
                 {this.state.showPinMode && 
                     <View style={styles.pinHolder}>
                         <Text style={styles.pinText}>{this.state.pinText}</Text>
@@ -282,6 +285,15 @@ export default class SplashPage extends Component {
                         </TouchableOpacity>
                     </View>
                 }
+                <View>
+                <TouchableOpacity 
+                           // disabled={!this.state.Pwd || !this.state.Mob_number}
+                            style={styles.submit}
+                            onPress={this._continueToHospitalsList}
+                            underlayColor='#fff'>
+                            <Text style={[styles.submitText]}>Emergency Services!</Text>
+                        </TouchableOpacity>
+                </View>
             </View>
         )
     }
@@ -351,7 +363,7 @@ const styles = StyleSheet.create({
         fontSize: 10
     },
     submit:{
-        marginTop:15,
+        marginTop:25,
         backgroundColor:'#e84925',
         borderRadius:10,
         borderWidth: 0,

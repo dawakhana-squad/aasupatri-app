@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, AppRegistry, StyleSheet, View, TouchableOpacity } from 'react-native';
-
 export default class Diagnosis extends Component {
     constructor(props) {
         super();
@@ -15,6 +14,9 @@ export default class Diagnosis extends Component {
             switch1Value:false,
         }
     }
+    _continueToHeart=()=>{
+        this.props.navigation.navigate('heart');
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -22,7 +24,7 @@ export default class Diagnosis extends Component {
                         <TouchableOpacity style={styles.colDataStyle}>                            
                             
                             <View >
-                                <Text style={styles.TextStyle2}>Heart</Text>
+                                <Text style={styles.TextStyle2} onPress={this._continueToHeart}>Heart</Text>
                             </View>
 
                         </TouchableOpacity>
